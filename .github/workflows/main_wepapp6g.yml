@@ -23,9 +23,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_477FFA53729E4F0093A37101AA815828 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9911354FED984ED5BE8B67ACB2C9DA1B }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_D205DEC4ADB04111AB8BDE7FA5BA225E }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_477FFA53729E4F0093A37101AA815828}}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9911354FED984ED5BE8B67ACB2C9DA1B}}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_D205DEC4ADB04111AB8BDE7FA5BA225E}}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -35,6 +35,7 @@ jobs:
           slot-name: 'Production'
           # 'package: .' tells the action to deploy everything from the root of your repo directly
           package: .
+
 
 
 
