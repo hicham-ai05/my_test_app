@@ -1,5 +1,7 @@
-# GitHub Actions workflow to deploy files (APK or static) to Azure Web App
-name: Deploy APK to Azure Web App
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Deploy Static Content to Azure Web App - amaflix
 
 on:
   push:
@@ -8,35 +10,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  deploy_static: # Simplified job name, as no 'build' is needed for static files
     runs-on: windows-latest
     permissions:
-      contents: read  # required for actions/checkout
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout
 
     steps:
-      # Step 1: Checkout repository
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Upload artifact (optional)
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-files
-          path: .  # Upload everything in the repo folder
-
-      # Step 3: Login to Azure
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_477FFA53729E4F0093A37101AA815828 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9911354FED984ED5BE8B67ACB2C9DA1B }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D205DEC4ADB04111AB8BDE7FA5BA225E }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_... }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_... }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_... }}
 
-      # Step 4: Deploy to Azure Web App
       - name: Deploy to Azure Web App
+        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'wepapp6G'          # Your Azure Web App name
-          slot-name: 'Production'        # Deployment slot
-          package: '.'                   # Deploy the entire repo folder
+          app-name: 'amaflix'
+          slot-name: 'Production'
+          # 'package: .' tells the action to deploy everything from the root of your repo directly
+          package: .
+
+
